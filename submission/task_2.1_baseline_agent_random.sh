@@ -25,5 +25,5 @@ python multigrid/scripts/train.py \
  --training-config '{"team_policies_mapping": {"red_0" : "your_policy_name" , "red_1" : "your_policy_name_v2" }}' \
  --restore-all-policies-from-checkpoint True \
  --policies-to-load red_0 red_1 \
- --load-dir $LOAD_DIR \ 
+ --load-dir $LOAD_DIR \
  --num-timesteps $NUM_TIMESTEPS 
