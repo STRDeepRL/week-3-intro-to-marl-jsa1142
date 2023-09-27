@@ -10,7 +10,7 @@ fi
 LOAD_DIR=$1
 
 python multigrid/scripts/visualize.py \
- --env MultiGrid-CompetativeRedBlueDoor-v3-CTDE-Red-NonRandom \
+ --env MultiGrid-CompetativeRedBlueDoor-v3-CTDE-Red \
  --num-episodes 10 \
  --load-dir $LOAD_DIR \
  --render-mode rgb_array \
