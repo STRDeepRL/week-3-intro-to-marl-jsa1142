@@ -1,0 +1,15 @@
+artifact_uri: /home/jj/github-classroom/STRDeepRL/week-3-intro-to-marl-jsa1142/submission/mlflow/459929739014892255/c1153d8612ea458eb9bc2c478b237f6e/artifacts
+end_time: null
+entry_point_name: ''
+experiment_id: '459929739014892255'
+lifecycle_stage: active
+run_id: c1153d8612ea458eb9bc2c478b237f6e
+run_name: CentralizedCritic_MultiGrid-CompetativeRedBlueDoor-v3-CTDE-Red_014d0_00000
+run_uuid: c1153d8612ea458eb9bc2c478b237f6e
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1695672385974
+status: 1
+tags: []
+user_id: unknown
