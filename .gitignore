@@ -26,5 +26,6 @@ venv
 
 # Ignore checkpoints
 *NonRandom*
+*CTDE_Testing*
 *checkpoint_*
 !*checkpoint_000220
