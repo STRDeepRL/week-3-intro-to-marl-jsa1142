@@ -7,7 +7,7 @@ from multigrid.core import Action
 from ray.rllib.algorithms.ppo import PPOConfig
 from gymnasium.core import ObservationWrapper
 
-class Policy(Policy):
+class DefaultPolicy(Policy):
     """
     Policy class for STR MARL competition
     About Populations:
@@ -59,7 +59,6 @@ class Policy(Policy):
     @staticmethod
     def custom_observations(obs: dict[AgentID, ObsType], policy_id: str, wrapper: ObservationWrapper):
         agent_observations = obs[policy_id]
-        import pdb; pdb.set_trace()
         if isinstance(agent_observations, list):
             # If it is stacked observations from multiple agents
             for observation in agent_observations:
@@ -84,7 +83,7 @@ class Policy(Policy):
         training_scheme,
     ):
         if action == Action.pickup:
-            agent_reward, agent_info = Policy.handle_pickup_action(
+            agent_reward, agent_info = DefaultPolicy.handle_pickup_action(
                 agent, agent_observed_objects, agent_reward, agent_info, reward_schemes, training_scheme
             )
         # Other action handlers can be added here...
@@ -106,11 +105,11 @@ class Policy(Policy):
             and (agent.color != agent.carrying.color)
         )
         if condition_key_pickup:
-            return Policy.process_key_pickup(agent, agent_observed_objects, agent_reward, reward_schemes, training_scheme)
+            return DefaultPolicy.process_key_pickup(agent, agent_observed_objects, agent_reward, reward_schemes, training_scheme)
         elif condition_ball_pickup:
-            return Policy.process_ball_pickup(agent, agent_observed_objects, agent_reward, reward_schemes, training_scheme)
+            return DefaultPolicy.process_ball_pickup(agent, agent_observed_objects, agent_reward, reward_schemes, training_scheme)
         else:
-            return Policy.process_invalid_pickup(agent, agent_reward, reward_schemes)
+            return DefaultPolicy.process_invalid_pickup(agent, agent_reward, reward_schemes)
 
     @staticmethod
     def process_key_pickup(agent, agent_observed_objects, agent_reward, reward_schemes, training_scheme):
@@ -119,7 +118,7 @@ class Policy(Policy):
         agent_reward += reward_schemes["key_pickup_sparse_reward"]
 
         if training_scheme in ["DTDE", "CTDE"]:
-            Policy.mimic_communications(agent, agent_observed_objects, "Go open the door with the key", "Go move away the ball")
+            DefaultPolicy.mimic_communications(agent, agent_observed_objects, "Go open the door with the key", "Go move away the ball")
 
         return agent_reward, {"info": "Key picked up"}
 
@@ -129,7 +128,7 @@ class Policy(Policy):
         agent.carrying.discount_factor *= agent.carrying.discount_factor
 
         if training_scheme in ["DTDE", "CTDE"]:
-            Policy.mimic_communications(agent, agent_observed_objects, "Go move away the ball", "Go pick up the key")
+            DefaultPolicy.mimic_communications(agent, agent_observed_objects, "Go move away the ball", "Go pick up the key")
 
         return agent_reward, {"info": "Ball picked up"}
 
