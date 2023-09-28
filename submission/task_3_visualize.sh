@@ -16,4 +16,5 @@ python multigrid/scripts/visualize.py \
  --load-dir $LOAD_DIR \
  --render-mode rgb_array \
  --gif DTDE_1v1-testing \
+ --team-policies-mapping '{"red_0" : "pickupper"}}' \
  --policies-to-eval red_0 
