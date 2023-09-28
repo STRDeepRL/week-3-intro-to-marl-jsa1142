@@ -30,3 +30,5 @@ venv
 *checkpoint_*
 !*checkpoint_000220
 *logs*
+*default*
+*eliminator*
