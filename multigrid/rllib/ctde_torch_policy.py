@@ -29,10 +29,10 @@ class CentralizedValueMixin:
     """
 
     def __init__(self):
-        # HW3 TODO: Fill in the blank to assign the central_value_function from the model to compute_central_vf.
+        # HW3 DONE: Fill in the blank to assign the central_value_function from the model to compute_central_vf.
         # This step is crucial for CTCE as it allows for the computation of the value function using
         # global state and action, leading to more informed and coordinated policy updates.
-        self.compute_central_vf = ______
+        self.compute_central_vf = self.model.central_value_function
 
 
 # Grabs the global team obs/act and includes it in the experience train_batch,
@@ -76,13 +76,13 @@ def centralized_critic_postprocessing(policy, sample_batch, other_agent_batches=
             [other_agent_batches[agent_id][2][SampleBatch.ACTIONS] for agent_id in team_members_agents], axis=1
         )
 
-        # HW3 TODO - Overwrite default VF prediction with the central VF
+        # HW3 DONE - Overwrite default VF prediction with the central VF
         # This is essential for CTCE as it replaces the default value function predictions,
         # which are based on individual observations, with a central value function prediction
         # that considers the observations and actions of all agents, leading to a more global
         # and coordinated policy.
         sample_batch[SampleBatch.VF_PREDS] = (
-            ___________________(
+            policy.compute_central_vf(
                 convert_to_torch_tensor(sample_batch[SampleBatch.CUR_OBS], policy.device),
                 convert_to_torch_tensor(sample_batch[GLOBAL_TEAM_OBS], policy.device),
                 convert_to_torch_tensor(sample_batch[GLOBAL_TEAM_ACTION], policy.device),
@@ -147,12 +147,12 @@ def loss_with_central_critic(policy, base_policy, model, dist_class, train_batch
     # Save original value function.
     vf_saved = model.value_function
 
-    # HW3 TODO - Calculate loss with a custom value function.
+    # HW3 DONE - Calculate loss with a custom value function.
     # This step is critical in CTCE as it allows the model to compute the loss using a central value function,
     # which takes into account the global state and actions, leading to more coordinated and effective learning
     # across different agents in the environment.
     # Fill in the blank to assign the custom value function to policy.model.central_value_function
-    model.value_function = lambda: ______(
+    model.value_function = lambda: policy.model.central_value_function(
         train_batch[SampleBatch.CUR_OBS],
         train_batch[GLOBAL_TEAM_OBS],
         train_batch[GLOBAL_TEAM_ACTION],
